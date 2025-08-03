@@ -1,0 +1,88 @@
+[keyboard]
+name = "thorium-rmk"
+product_name = "thorium-rmk"
+vendor_id = 0x4c4b
+product_id = 0x4643
+manufacturer = "RMK"
+chip = "nrf52840"
+
+[layout]
+# WARNING: Currently row2col/col2row is set in RMK's feature gate, row2col config here is valid ONLY when you're using cloud compilation.
+# Checkout doc here: https://rmk.rs/docs/user_guide/faq.html#my-matrix-is-row2col-the-matrix-doesn-t-work
+# row2col = true
+rows = 4
+cols = 10
+layers = 5
+keymap = [
+    [
+        ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
+        ["MT(A, LCtrl)", "MT(S, LAlt)", "MT(D, LShift)", "MT(F, LGui)", "G", "H", "MT(J, LGui)", "MT(K, LShift)", "MT(L, LAlt)", "MT(Semicolon, LCtrl)"],
+        ["Z", "X", "C", "V", "B", "N", "M", "Comma", "Dot", "Slash"],
+        ["No", "No", "No", "MO(1)", "Space", "MO(2)", "MO(3)", "No", "No", "No"],
+    ],
+    [
+        ["WM(Q, LAlt)", "WM(Equal, LShift)", "WM(3, LShift)", "WM(4, LShift)", "WM(7, LShift)", "Equal", "WM(0, LShift)", "WM(9, LShift)", "WM(O, LAlt)", "WM(P, LAlt)"],
+        ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"],
+        ["WM(Minus, LShift)", "Minus", "WM(Comma, LShift)", "WM(Dot, LShift)", "WM(8, LShift)", "WM(5, LShift)", "WM(6, LShift)", "WM(Comma, LAlt)", "WM(Dot, LAlt)", "Slash"],
+        ["No", "No", "No", "_", "MO(4)", "_", "_", "No", "No", "No"]
+    ],
+    [
+        ["MediaPrevTrack", "MediaPlayPause", "MediaNextTrack", "AudioVolDown", "AudioVolUp", "Escape", "Backspace", "PageUp", "Delete", "BrightnessUp"],
+        ["F1", "F2", "F3", "F4", "F5", "Left", "Down", "Up", "Right", "Enter"],
+        ["F6", "F7", "F8", "F9", "F10", "Home", "Tab", "PageDown", "End", "BrightnessDown"],
+        ["No", "No", "No", "F11", "F12", "_", "No", "No", "No", "No"]
+    ],
+    [
+        ["WM(Q, LAlt)", "WM(Equal, LShift)", "WM(3, LShift)", "WM(4, LShift)", "WM(7, LShift)", "Equal", "WM(0, LShift)", "WM(9, LShift)", "WM(O, LAlt)", "WM(P, LAlt)"],
+        ["WM(A, LAlt)", "WM(Slash, LShift)", "WM(LeftBracket, LShift)", "WM(RightBracket, LShift)", "WM(1, LShift)", "WM(H, LAlt)", "RightBracket", "LeftBracket", "WM(L, LAlt)", "WM(Semicolon, LAlt)"],
+        ["WM(Minus, LShift)", "Minus", "WM(Comma, LShift)", "WM(Dot, LShift)", "WM(8, LShift)", "WM(5, LShift)", "WM(6, LShift)", "WM(Comma, LAlt)", "WM(Dot, LAlt)", "Slash"],
+        ["No", "No", "No", "Backslash", "WM(2, LShift)", "_", "_", "No", "No", "No"]
+    ],
+    [
+        ["Bootloader", "_", "_", "_", "_", "_", "_", "_", "_", "_"],
+        ["_", "_", "_", "_", "_", "_", "_", "_", "_", "_"],
+        ["_", "_", "_", "_", "_", "_", "_", "_", "_", "_"],
+        ["No", "No", "No", "_", "_", "_", "_", "No", "No", "No"]
+    ],
+]
+
+[ble]
+enabled = true
+
+[behavior]
+tap_hold = { enable_hrm = true, permissive_hold = true }
+
+[behavior.combo]
+timeout = "150ms"
+combos = [
+    # RMEH
+    { actions = ["M", "Comma"], output = "WM(No, LShift | LAlt | LCtrl)", layer = 0 },
+    # RHYPER
+    { actions = ["Comma", "Dot"], output = "WM(No, LShift | LAlt | LCtrl | LGui)", layer = 0 },
+]
+
+[storage]
+clear_storage = true
+
+[split]
+connection = "ble"
+
+[split.central]
+rows = 4
+cols = 5
+row_offset = 0
+col_offset = 0
+ble_addr = [0x18, 0xe2, 0x21, 0x80, 0xc0, 0xc7]
+[split.central.matrix]
+input_pins = ["P0_04", "P0_02", "P0_03", "P0_05"]
+output_pins = ["P1_15", "P1_14", "P1_13", "P1_11", "P1_12"]
+
+[[split.peripheral]]
+rows = 4
+cols = 5
+row_offset = 0
+col_offset = 5
+ble_addr = [0x7e, 0xfe, 0x73, 0x9e, 0x66, 0xe3]
+[split.peripheral.matrix]
+input_pins = ["P1_13", "P1_14", "P1_15", "P1_12"]
+output_pins = ["P1_11", "P0_05", "P0_04", "P0_29", "P0_28"]
